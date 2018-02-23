@@ -1,31 +1,29 @@
 function InversePairs(array) {
     if (!array || array.length < 2) return 0
     var copy = array.slice(0),
-        count = mergeSort(array, copy, 0, array.length - 1);
+        count = mergeSort(copy, array, 0, array.length - 1)
     return count % 1000000007
 }
 
-function mergeSort(arr, copy, start, end) {
-    if (start >= end) {
-        return 0
-    }
+function mergeSort(copy, arr, l, r) {
+    if (l >= r) return 0
 
-    var mid = (start + end) >> 1,
-        leftCount = mergeSort(copy, arr, start, mid),
-        rightCount = mergeSort(copy, arr, mid + 1, end),
+    var mid = (r + l) >> 1,
+        leftCount = mergeSort(arr, copy, l, mid),
+        rightCount = mergeSort(arr, copy, mid + 1, r),
         i = mid,
-        j = end,
-        index = end,
+        j = r,
+        index = r,
         count = 0;
-    while (i >= start && j >= mid + 1) {
+    while (i >= l && j > mid) {
         if (arr[i] > arr[j]) {
             copy[index--] = arr[i--]
             count += j - mid
-        } else {
+        }else{
             copy[index--] = arr[j--]
         }
     }
-    while (i >= start) {
+    while (i >= l) {
         copy[index--] = arr[i--]
     }
     while (j >= mid + 1) {
